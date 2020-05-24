@@ -106,7 +106,7 @@ if(posX<0) {
 
 }
 
-if(posX>canvaSize-2) {
+if(posX>canvaSize) {
 
     posX= 0;
 
@@ -118,7 +118,7 @@ if(posY<0) {
 
 }
 
-if(posY>canvaSize-2) {
+if(posY>canvaSize-1) {
 
     posY= 0;
 
@@ -134,7 +134,7 @@ ctx.fillStyle="yellow";
 
 for(var i=0;i<snakeRoute.length;i++) {
 
-    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid-2,canvasGrid,canvasGrid-2);
+    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid-2,canvasGrid,canvasGrid);
    
     if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
        
@@ -171,7 +171,7 @@ if(applePosX==posX && applePosY==posY) {
 
 ctx.fillStyle="red";
 
-ctx.drawImage(apple,applePosX*(canvasGrid) - 10,applePosY*canvasGrid -10,canvasGrid-2,canvasGrid)-2;
+ctx.drawImage(apple,applePosX*(canvasGrid) - 4,applePosY*canvasGrid -4,canvasGrid-4,canvasGrid-4);
 
 }
 function scoreUpdate(){
