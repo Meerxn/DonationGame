@@ -134,7 +134,7 @@ ctx.fillStyle="yellow";
 
 for(var i=0;i<snakeRoute.length;i++) {
 
-    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid,canvasGrid,canvasGrid);
+    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid-2,canvasGrid,canvasGrid-2);
    
     if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
        
@@ -162,16 +162,16 @@ if(applePosX==posX && applePosY==posY) {
 
     tail++;
 
-    applePosX=Math.floor(Math.random()*canvaSize);
+    applePosX=Math.floor(Math.random()*canvaSize/2);
 
-    applePosY=Math.floor(Math.random()*canvaSize);
+    applePosY=Math.floor(Math.random()*canvaSize/2);
   this.scoreUpdate();
 
 }
 
 ctx.fillStyle="red";
 
-ctx.drawImage(apple,applePosX*canvasGrid - 4,applePosY*canvasGrid -4,canvasGrid,canvasGrid);
+ctx.drawImage(apple,applePosX*(canvasGrid) - 10,applePosY*canvasGrid -10,canvasGrid-2,canvasGrid)-2;
 
 }
 function scoreUpdate(){
