@@ -188,16 +188,25 @@ function gameOver(){
     document.getElementById("score").innerHTML = 0;
     document.getElementById("donation").innerHTML = 0;
  alert("Your score was: " +  clicks +  " Send the screenshot of this page before clicking OK to the socials below. ");
-this.clicks = 0 ;
-posX=posY=10;
+ var clicks = 0; 
+var apple = new Image();
+apple.src = "apple.jpeg";
 
-canvasGrid=canvaSize=20;
+posX=25;
+posY=25;
 
-applePosX=applePosY=15;
+canvasGrid = 25;
+canvaSize=25;
 
-velocityX=velocityY=0;
+applePosX=15;
+applePosY=15;
 
-snakeRoute=[];
+velocityX=0;
+velocityY=0;
+
+trail=[];
+
+tail = 5;
 
 }
 
