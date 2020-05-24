@@ -15,8 +15,8 @@
         <div class="card">
             <div class="card-body">
             <h5 class="card-title">Donation Game: Snake</h5>
-            <p class="card-text">This is a basic snake game. The scores that you will get will be used as a metric for donating money to organizations. Although there is no max limit to the score 
-                there is a max limit donation from one person. After you have finisihed your game there will be a pop window. Please screeenshot it and send it to the socials provided below.</p>
+            <p class="card-text">This is a basic snake game. The scores that you will get will be used as a metric by me to donate money to organizations. Although there is no max limit to the score 
+                there is a max limit donation (Total 300 AED) from one person. After you have finisihed your game there will be a pop window. Please screeenshot it and send it to the socials provided below.</p>
             <blockquote class="blockquote mb-0">
                 
                 <footer class="blockquote-footer">By Fardeen Meeran & Krishang Patney</footer>
@@ -33,8 +33,8 @@
                     <h5 class="card-title">Snake</h5>
                     <p class="card-text"> <p align = "center">Score: <a id = "score" > 0 </a> </p> </p>
                     <div class="row justify-content-md-center">
-                        <div class="col-md-auto"><a href="https://www.instagram.com/meerxn_/" class="btn btn-primary">Instagram</a></div>
-                        <div class="col-md-auto"><a href="#" class="btn btn-primary">Twitter</a></div>
+                        <div class="col-md-auto"><a href="https://www.instagram.com/meerxn_/" target="_blank"  class="btn btn-primary">Instagram</a></div>
+                        <div class="col-md-auto"><a href="https://twitter.com/Meerxn" target="_blank"class="btn btn-primary">Twitter</a></div>
                     </div>
                 </div>
             </div>
@@ -69,35 +69,37 @@ setInterval(game,1000/15);
 }
 var clicks = 0; 
 var apple = new Image();
-apple.src = "apple.jpeg"
+apple.src = "apple.jpeg";
 
-posX=25
+posX=25;
 posY=25;
 
 canvasGrid = 25;
-tc=25;
+canvaSize=25;
 
-ax=ay=15;
+applePosX=15;
+applePosY=15;
 
-xv=yv=0;
+velocityX=0;
+velocityY=0;
 
-trail=[];
+snakeRoute=[];
 
 tail = 5;
 
 function game() {
 
-posX+=xv;
+posX+=velocityX;
 
-posY+=yv;
+posY+=velocityY;
 
 if(posX<0) {
 
-    posX= tc-1;
+    posX= canvaSize-1;
 
 }
 
-if(posX>tc-1) {
+if(posX>canvaSize-1) {
 
     posX= 0;
 
@@ -105,11 +107,11 @@ if(posX>tc-1) {
 
 if(posY<0) {
 
-    posY= tc-1;
+    posY= canvaSize-1;
 
 }
 
-if(posY>tc-1) {
+if(posY>canvaSize-1) {
 
     posY= 0;
 
@@ -123,15 +125,11 @@ ctx.fillRect(0,0,canv.width,canv.height);
 
 ctx.fillStyle="green";
 
-for(var i=0;i<trail.length;i++) {
+for(var i=0;i<snakeRoute.length;i++) {
 
-    ctx.fillRect(trail[i].x*canvasGrid
-    ,trail[i].y*canvasGrid
-    ,canvasGrid
-    -2,canvasGrid
-    -2);
+    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid,canvasGrid-2,canvasGrid-2);
   
-    if(trail[i].x==posX && trail[i].y==posY && clicks > 0){
+    if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
        
         gameOver();
       
@@ -140,34 +138,34 @@ for(var i=0;i<trail.length;i++) {
 
 
 }
-trail.push({x:posX,y:posY});
+snakeRoute.push({x:posX,y:posY});
 
 
-while(trail.length>tail) {
+while(snakeRoute.length>tail) {
     
     
 
-trail.shift();
+snakeRoute.shift();
 
 }
 
 
 
-if(ax==posX && ay==posY) {
+if(applePosX==posX && applePosY==posY) {
 
     tail++;
 
-    ax=Math.floor(Math.random()*tc);
+    applePosX=Math.floor(Math.random()*canvaSize);
 
-    ay=Math.floor(Math.random()*tc);
+    applePosY=Math.floor(Math.random()*canvaSize);
   this.scoreUpdate();
 
 }
 
 ctx.fillStyle="red";
 
-ctx.drawImage(apple,ax*canvasGrid
-,ay*canvasGrid
+ctx.drawImage(apple,applePosX*canvasGrid
+,applePosY*canvasGrid
 ,canvasGrid
 -2,canvasGrid
 -2);
@@ -181,17 +179,16 @@ function gameOver(){
     document.getElementById("score").innerHTML = 0;
 
  alert("Your score was: " +  clicks +  " Send the screenshot for the donation on the socials at the bottom ");
-this.clicks = 0     
+this.clicks = 0 ;    
 posX=posY=10;
 
-canvasGrid
-=tc=20;
+canvasGrid=canvaSize=20;
 
-ax=ay=15;
+applePosX=applePosY=15;
 
-xv=yv=0;
+velocityX=velocityY=0;
 
-trail=[];
+snakeRoute=[];
 
 tail = 5;
 }
@@ -200,27 +197,27 @@ function keyPush(evt) {
 
 switch(evt.keyCode) {
 
-    case 37:
+ case 37:
      evt.preventDefault()
-        xv=-1;yv=0;
+        velocityX=-1;velocityY=0;
 
         break;
 
     case 38:
     evt.preventDefault()
-        xv=0;yv=-1;
+        velocityX=0;velocityY=-1;
 
         break;
 
     case 39:
     evt.preventDefault()
-        xv=1;yv=0;
+        velocityX=1;velocityY=0;
 
         break;
 
     case 40:
     evt.preventDefault()
-        xv=0;yv=1;
+        velocityX=0;velocityY=1;
 
         break;
 
