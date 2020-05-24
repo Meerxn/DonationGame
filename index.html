@@ -5,6 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Donation Game</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -16,251 +18,335 @@
             <div class="card-body">
             <h5 class="card-title">Snake for Charity</h5>
             <p class="card-text">Spend your quarantine playing this old school game of snake and I will donate to organisations based on your score. 
-For every point you score, I will donate AED 0.25 to local organizations. Be sure to take a screenshot of your score and send it to me via the social links provided below..</p>
+                                    For every point you score, I will donate AED 0.25 to local organizations. Be sure to take a screenshot of your score and send it to me via the social links provided below..</p>
             <blockquote class="blockquote mb-0">
                 
                 <footer class="blockquote-footer">By Fardeen Meeran & Krishang Patney</footer>
-              </blockquote>
+            </blockquote>
             </div>
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-md-auto">
-            <div class="card" style="width: 600px;">
+    <div class="modal-body row">
+        <div class="col-md-6">
+            <div class="card" style="max-width: 600px;">
                 <div class="card-body">
-                    <canvas id="canvasGrid" width="550" height="550"></canvas>
+                    <canvas id="canvasGrid" height="484rem" width="484rem"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">    
+                <div class="card" style="width: 400rem;">
+                    <div class="card-header">
+                        <center>&#128013 Snake Game &#128013</center>
+                      </div>
+                    <ul class="list-group list-group-flush">
                     
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-auto"><br><a href="https://www.instagram.com/meerxn_/" target="_blank"  class="btn btn-primary">Instagram</a></div>
-                        <div class="col-md-auto"><br><a href="https://twitter.com/Meerxn" target="_blank"class="btn btn-primary">Twitter</a></div>
- 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-auto">
-            <div class="card" style="width: 400px;">
-                <div class="card-body">
-                    <h5 class="card-title">Snake</h5>
-                    <p class="card-text"> 
-                        Score: <a id = "score" > 0 </a> 
+                      <li class="list-group-item">
+                        <div class="row justify-content-md-center">
+                            <div class="col-xs-auto">
+                                <button type="button"  id="buttons-generic" data-key="38" class="btn btn-dark" style="width: 95px;">Up</button>
+                            </div>          
+                        </div>
                         <br>
-                        Total Donation : 300 AED
+                        <div class="row justify-content-md-center">
+                            <div class="col-xs-auto">
+                                <button type="button"  data-key="37" class="btn btn-dark"  style="width: 95px;">Left</button>
+                            </div>
+                            <div class="col-xs-auto">
+                                <button type="button" data-key="40" class="btn btn-dark"  style="width: 95px;">Down</button>
+                                
+                            </div>
+                            <div class="col-xs-auto">
+                                <button type="button" data-key="39" class="btn btn-dark"  style="width: 95px;">Right</button>
+                            </div>
+                      </li>
+                      <li class="list-group-item">
+                        
+                        <p class="card-text"> 
+                            Score: <a id = "score" > 0 </a> 
+                            <br>
+                            Total Donation : 300 AED
+                            <br>
+                            Your Current Donation : <a id='donation'> 0 </a>AED
+                        </p>
+                    </li>
+                      <li class="list-group-item">
+                        Rules : 
                         <br>
-                        Your Current Donation : <a id='donation'> 0 AED</a>
-                    </p>
-                </div>
-            </div>
+                        1. If you click the arrow keys opposing each other you'll lose the game.
+                        <br>
+                        2. If you do not see the snake on the starting position, click the right arrow. 
+                        <br>
+                        3. If your snake goes outside the bounds click the up arrow.
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-auto"><br><a href="https://www.instagram.com/meerxn_/" target="_blank"  class="btn btn-primary">Instagram</a></div>
+                            <div class="col-md-auto"><br><a href="https://twitter.com/Meerxn" target="_blank"class="btn btn-primary">Twitter</a></div>
+                        </div>
+                        <br>
+                      </li>
+                    </ul>
+                  </div>
             <br>
-            <div class="card" style="width: 400px;">
-                <div class="card-body">
-                     <img src="arrow keys.gif" width="350" alt="Arrows">
-                </div>
-            </div>
-            <br>
-            <div class="card" style="width: 400px;">
-                <div class="card-body">
-                    Rules : 
-                    <br>
-                    1. If you click the arrow keys opposing each other you'll lose the game.
-                    <br>
-                    2. If you do not see the snake on the starting position, click the right arrow. 
-                    <br>
-                    3. If your snake goes outside the bounds click the up arrow.
-                </div>
-            </div>
-
         </div>
-        
     </div>
-     
-
 </div>
 </html>
 
+<script>
+    
+    function __triggerKeyboardEvent(el, keyCode)
+    {
+        var eventObj = document.createEventObject ?
+            document.createEventObject() : document.createEvent("Events");
+    
+        if(eventObj.initEvent){
+        eventObj.initEvent("keydown", true, true);
+        }
+    
+        eventObj.keyCode = keyCode;
+        eventObj.which = keyCode;
+        
+        el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent("onkeydown", eventObj); 
+    
+    } 
+
+    function traceEvent(e){
+        $(".logs").prepend(jQuery("<li>").html(
+        "Key = " + e.keyCode
+        ).fadeIn());
+        
+        console.log(e);
+    }
+
+    function triggerKeyboardEvent(el, keyCode){
+        var keyboardEvent = document.createEvent("KeyboardEvent");
+        
+        var initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? "initKeyboardEvent" : "initKeyEvent";
+    
+    
+        keyboardEvent[initMethod](
+                        "keydown",
+                            true,      // bubbles oOooOOo0
+                            true,      // cancelable   
+                            window,    // view
+                            false,     // ctrlKeyArg
+                            false,     // altKeyArg
+                            false,     // shiftKeyArg
+                            false,     // metaKeyArg
+                            keyCode,  
+                            0          // charCode   
+        );
+    
+        el.dispatchEvent(keyboardEvent); 
+    }
+
+    $(document).ready(function(){
+    
+    document.addEventListener("keydown", function(e){
+        traceEvent(e);
+    });
+    
+    $(document).find("button").click(function(){
+        __triggerKeyboardEvent(document.body, parseInt($(this).attr("data-key")));
+    });
+
+    $("#buttons-keyboard").find("button").click(function(){
+        triggerKeyboardEvent(document.body, parseInt($(this).attr("data-key")));
+    });
+    
+    /*
+    setInterval(function(){
+        __triggerKeyboardEvent(document.body, 13);
+    }, 5000);
+    */
+    });
+
+</script>
 
 <script>
- 
 
     window.onload=function() {
 
-canv=document.getElementById("canvasGrid");
+        canv=document.getElementById("canvasGrid");
 
-ctx=canv.getContext("2d");
+        ctx=canv.getContext("2d");
 
-document.addEventListener("keydown",keyPush);
+        document.addEventListener("keydown",keyPush);
 
-setInterval(game,1000/15);
+        setInterval(game,1000/15);
 
-}
-var clicks = 0; 
-var apple = new Image();
-apple.src = "apple.jpeg";
+    }
+ 
+ 
+    // console.log(Math.sqrt(screen.width));
 
-posX=25;
-posY=25;
+    var clicks = 0; 
+    var apple = new Image();
+    apple.src = "Untitled-1.png";
 
-canvasGrid = 25;
-canvaSize=25;
+    canvasGrid = canvaSize = 22;
 
-applePosX=15;
-applePosY=15;
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+    posX = posY = getRandomInt(10);
+    applePosX = applePosY = getRandomInt(20);
+    
 
-velocityX=0;
-velocityY=0;
+    velocityX=0;
+    velocityY=0;
 
-snakeRoute=[];
+    snakeRoute=[];
 
-tail = 5;
+    tail = 5;
 
-function game() {
+    function game() {
 
-posX+=velocityX;
+        posX+=velocityX;
 
-posY+=velocityY;
+        posY+=velocityY;
 
-if(posX<0) {
+        if(posX<0) {
 
-    posX= canvaSize-1;
+            posX= canvaSize-1;
 
-}
+        }
 
-if(posX>canvaSize) {
+        if(posX>canvaSize) {
 
-    posX= 0;
+            posX= 0;
 
-}
+        }
 
-if(posY<0) {
+        if(posY<0) {
 
-    posY= canvaSize-1;
+            posY= canvaSize-1;
 
-}
+        }
 
-if(posY>canvaSize-1) {
+        if(posY>canvaSize-1) {
 
-    posY= 0;
+            posY= 0;
 
-}
+        }
 
-ctx.fillStyle="black";
+        ctx.fillStyle="black";
 
-ctx.fillRect(0,0,canv.width,canv.height);
+        ctx.fillRect(0,0,canv.width,canv.height);
 
 
 
-ctx.fillStyle="yellow";
+        ctx.fillStyle="yellow";
 
-for(var i=0;i<snakeRoute.length;i++) {
+        for(var i=0;i<snakeRoute.length;i++) {
 
-    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid-2,canvasGrid,canvasGrid);
-   
-    if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
-       
-        gameOver();
-      
+            ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid-2,canvasGrid,canvasGrid);
+        
+            if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
+            
+                gameOver();
+            
+
+            }
+
+
+    }
+    snakeRoute.push({x:posX,y:posY});
+
+
+    while(snakeRoute.length>tail) {
+        
+        
+
+    snakeRoute.shift();
 
     }
 
 
-}
-snakeRoute.push({x:posX,y:posY});
 
+    if(applePosX==posX && applePosY==posY) {
 
-while(snakeRoute.length>tail) {
+        tail++;
+
+        applePosX=getRandomInt(22);
+
+        applePosY=getRandomInt(22);
+        this.scoreUpdate();
+
+    }
+
+    ctx.fillStyle="red";
+
+    ctx.drawImage(apple,applePosX*(canvasGrid) - 4,applePosY*canvasGrid -4,canvasGrid-4,canvasGrid-4);
+
+    }
+    function scoreUpdate(){
+    this.clicks = this.clicks + 1;
+    document.getElementById("score").innerHTML = clicks;
+    donation = clicks/4
+    document.getElementById("donation").innerHTML = donation;
+    }
     
+    function gameOver(){
+        document.getElementById("score").innerHTML = 0;
+        document.getElementById("donation").innerHTML = 0;
+        alert("Your score was: " +  clicks +  " Take a screenshot of this page before clicking OK to the socials below. ");
+        this.clicks = 0 ;
+
+        // canvasGrid=canvaSize=20;
+        // canvasGrid = 25;
+        // canvaSize=25;
+
+        // posX=posY=10;
+        canvasGrid = canvaSize = 22;
+        posX = posY = getRandomInt(20);
+        applePosX = applePosY = getRandomInt(20);
     
 
-snakeRoute.shift();
 
-}
+        // applePosX=applePosY=15;
 
+        velocityX=velocityY=0;
 
+        snakeRoute=[];
+        this.tail = 4;
 
-if(applePosX==posX && applePosY==posY) {
+    }
 
-    tail++;
+    function keyPush(evt) {
 
-    applePosX=Math.floor(Math.random()*canvaSize/2);
+    switch(evt.keyCode) {
 
-    applePosY=Math.floor(Math.random()*canvaSize/2);
-  this.scoreUpdate();
+        case 37:
+            evt.preventDefault()
+                velocityX=-1;velocityY=0;
 
-}
+                break;
 
-ctx.fillStyle="red";
+            case 38:
+            evt.preventDefault()
+                velocityX=0;velocityY=-1;
 
-ctx.drawImage(apple,applePosX*(canvasGrid) - 4,applePosY*canvasGrid -4,canvasGrid-4,canvasGrid-4);
+                break;
 
-}
-function scoreUpdate(){
-this.clicks = this.clicks + 1;
-document.getElementById("score").innerHTML = clicks;
-donation = clicks/4
-document.getElementById("donation").innerHTML = donation;
-}
-function gameOver(){
-    document.getElementById("score").innerHTML = 0;
-    document.getElementById("donation").innerHTML = 0;
- alert("Your score was: " +  clicks +  " Send the screenshot of this page before clicking OK to the socials below. ");
-this.clicks = 0 ;
-canvasGrid=canvaSize=20;
-canvasGrid = 25;
-canvaSize=25;
+            case 39:
+            evt.preventDefault()
+                velocityX=1;velocityY=0;
 
-posX=posY=10;
+                break;
 
+            case 40:
+            evt.preventDefault()
+                velocityX=0;velocityY=1;
 
+                break;
 
-applePosX=applePosY=15;
+        }
 
-velocityX=velocityY=0;
-
-snakeRoute=[];
-this.tail = 5;
-
-}
-
-function keyPush(evt) {
-
-switch(evt.keyCode) {
-
- case 37:
-     evt.preventDefault()
-        velocityX=-1;velocityY=0;
-
-        break;
-
-    case 38:
-    evt.preventDefault()
-        velocityX=0;velocityY=-1;
-
-        break;
-
-    case 39:
-    evt.preventDefault()
-        velocityX=1;velocityY=0;
-
-        break;
-
-    case 40:
-    evt.preventDefault()
-        velocityX=0;velocityY=1;
-
-        break;
-
-}
-function donateCalculator(score){
- donation = score/4
-}
-
-
-}
-
-
-
-
-
+    }
 
 </script>
