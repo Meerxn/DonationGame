@@ -134,7 +134,7 @@ ctx.fillStyle="yellow";
 
 for(var i=0;i<snakeRoute.length;i++) {
 
-    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid,canvasGrid-2,canvasGrid-2);
+    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid,canvasGrid,canvasGrid);
    
     if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
        
@@ -171,11 +171,7 @@ if(applePosX==posX && applePosY==posY) {
 
 ctx.fillStyle="red";
 
-ctx.drawImage(apple,applePosX*canvasGrid
-,applePosY*canvasGrid
-,canvasGrid
--2,canvasGrid
--2);
+ctx.drawImage(apple,applePosX*canvasGrid - 4,applePosY*canvasGrid -4,canvasGrid,canvasGrid);
 
 }
 function scoreUpdate(){
@@ -189,9 +185,13 @@ function gameOver(){
     document.getElementById("donation").innerHTML = 0;
  alert("Your score was: " +  clicks +  " Send the screenshot of this page before clicking OK to the socials below. ");
 this.clicks = 0 ;
+canvasGrid=canvaSize=20;
+canvasGrid = 25;
+canvaSize=25;
+
 posX=posY=10;
 
-canvasGrid=canvaSize=20;
+
 
 applePosX=applePosY=15;
 
