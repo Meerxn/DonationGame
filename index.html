@@ -16,7 +16,7 @@
             <div class="card-body">
             <h5 class="card-title">Donation Game: Snake</h5>
             <p class="card-text">This is a basic snake game. The scores that you will get will be used as a metric by me to donate money to organizations. Although there is no max limit to the score 
-                there is a max limit donation (Total 300 AED) from one person. After you have finisihed your game there will be a pop window. Please screeenshot it and send it to the socials provided below.</p>
+                there is a max limit donation (Total 300) from one person. After you have finisihed your game there will be a pop window. Please screeenshot it and send it to the socials provided below.</p>
             <blockquote class="blockquote mb-0">
                 
                 <footer class="blockquote-footer">By Fardeen Meeran & Krishang Patney</footer>
@@ -43,6 +43,13 @@
             <div class="card" style="width: 400px;">
                 <div class="card-body">
                      <img src="arrow keys.gif" width="350" alt="Arrows">
+                </div>
+            </div>
+            <div class="card" style="width: 400px;">
+                <div class="card-body">
+                    Total Donation : 300 AED
+                    <br>
+                    Your Current Donation : <a id='donation'> 0 </a>
                 </div>
             </div>
         </div>
@@ -83,7 +90,7 @@ applePosY=15;
 velocityX=0;
 velocityY=0;
 
-snakeRoute=[];
+trail=[];
 
 tail = 5;
 
@@ -125,11 +132,11 @@ ctx.fillRect(0,0,canv.width,canv.height);
 
 ctx.fillStyle="yellow";
 
-for(var i=0;i<snakeRoute.length;i++) {
+for(var i=0;i<trail.length;i++) {
 
-    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid,canvasGrid-2,canvasGrid-2);
-  
-    if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
+    ctx.fillRect(trail[i].x*canvasGrid,trail[i].y*canvasGrid,canvasGrid-2,canvasGrid-2);
+   
+    if(trail[i].x==posX && trail[i].y==posY && clicks > 0){
        
         gameOver();
       
@@ -138,14 +145,14 @@ for(var i=0;i<snakeRoute.length;i++) {
 
 
 }
-snakeRoute.push({x:posX,y:posY});
+trail.push({x:posX,y:posY});
 
 
-while(snakeRoute.length>tail) {
+while(trail.length>tail) {
     
     
 
-snakeRoute.shift();
+trail.shift();
 
 }
 
@@ -174,12 +181,14 @@ ctx.drawImage(apple,applePosX*canvasGrid
 function scoreUpdate(){
 this.clicks = this.clicks + 1;
 document.getElementById("score").innerHTML = clicks;
+donation = clicks/4
+document.getElementById("donation").innerHTML = donation;
 }
 function gameOver(){
     document.getElementById("score").innerHTML = 0;
-
- alert("Your score was: " +  clicks +  " Send the screenshot for the donation on the socials at the bottom ");
-this.clicks = 0 ;    
+    document.getElementById("donation").innerHTML = 0;
+ alert("Your score was: " +  clicks +  " Send the screenshot of this page before clicking OK to the socials below. ");
+this.clicks = 0 ;
 posX=posY=10;
 
 canvasGrid=canvaSize=20;
@@ -190,7 +199,6 @@ velocityX=velocityY=0;
 
 snakeRoute=[];
 
-tail = 5;
 }
 
 function keyPush(evt) {
@@ -225,6 +233,7 @@ switch(evt.keyCode) {
 function donateCalculator(score){
  donation = score/4
 }
+
 
 }
 
