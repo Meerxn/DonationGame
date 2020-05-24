@@ -132,11 +132,11 @@ ctx.fillRect(0,0,canv.width,canv.height);
 
 ctx.fillStyle="yellow";
 
-for(var i=0;i<trail.length;i++) {
+for(var i=0;i<snakeRoute.length;i++) {
 
-    ctx.fillRect(trail[i].x*canvasGrid,trail[i].y*canvasGrid,canvasGrid-2,canvasGrid-2);
+    ctx.fillRect(snakeRoute[i].x*canvasGrid,snakeRoute[i].y*canvasGrid,canvasGrid-2,canvasGrid-2);
    
-    if(trail[i].x==posX && trail[i].y==posY && clicks > 0){
+    if(snakeRoute[i].x==posX && snakeRoute[i].y==posY && clicks > 0){
        
         gameOver();
       
@@ -145,14 +145,14 @@ for(var i=0;i<trail.length;i++) {
 
 
 }
-trail.push({x:posX,y:posY});
+snakeRoute.push({x:posX,y:posY});
 
 
-while(trail.length>tail) {
+while(snakeRoute.length>tail) {
     
     
 
-trail.shift();
+snakeRoute.shift();
 
 }
 
