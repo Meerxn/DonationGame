@@ -1,1 +1,205 @@
 
+<h1 style="text-align: center;">Donation Game: Snake</h1></thead>
+<h2 style="text-align: center;">by Fardeen Meeran</h2>
+<p style="text-align: center;"> This is a basic snake game. The scores that you will get will be used as a metric for donating money to organizations. Although there is no max limit to the score 
+there is a max limit donation from one person. After you have finisihed your game there will be a pop window. Please screeenshot it and send it to the socials provided below.</p>
+<table style="text-align: center;" cellspacing = 20px>
+
+ 
+ <tr><td>
+<p align = "right"><canvas id="canvasGrid" width="550" height="550"></canvas></p></td>
+<td><table>
+<tr><img src="arrow keys.gif" alt="W A S D"></tr></table></td>
+
+
+</tr>
+<tr>
+    <td>
+<p align = "center">Score: <a id = "score" > 0 </a> </p>
+</td>
+</tr>
+<tr style="text-align: center;"> <td>Twitter: @Meerxn Instagram: @Meerxn_ Snapchat:</td></tr>
+</table>
+
+
+<script>
+ 
+
+    window.onload=function() {
+
+canv=document.getElementById("canvasGrid");
+
+ctx=canv.getContext("2d");
+
+document.addEventListener("keydown",keyPush);
+
+setInterval(game,1000/15);
+
+}
+var clicks = 0; 
+var apple = new Image();
+apple.src = "apple.jpeg"
+
+posX=25
+posY=25;
+
+canvasGrid = 25;
+tc=25;
+
+ax=ay=15;
+
+xv=yv=0;
+
+trail=[];
+
+tail = 5;
+
+function game() {
+
+posX+=xv;
+
+posY+=yv;
+
+if(posX<0) {
+
+    posX= tc-1;
+
+}
+
+if(posX>tc-1) {
+
+    posX= 0;
+
+}
+
+if(posY<0) {
+
+    posY= tc-1;
+
+}
+
+if(posY>tc-1) {
+
+    posY= 0;
+
+}
+
+ctx.fillStyle="black";
+
+ctx.fillRect(0,0,canv.width,canv.height);
+
+
+
+ctx.fillStyle="green";
+
+for(var i=0;i<trail.length;i++) {
+
+    ctx.fillRect(trail[i].x*canvasGrid
+    ,trail[i].y*canvasGrid
+    ,canvasGrid
+    -2,canvasGrid
+    -2);
+  
+    if(trail[i].x==posX && trail[i].y==posY && clicks > 0){
+       
+        gameOver();
+      
+
+    }
+
+
+}
+trail.push({x:posX,y:posY});
+
+
+while(trail.length>tail) {
+    
+    
+
+trail.shift();
+
+}
+
+
+
+if(ax==posX && ay==posY) {
+
+    tail++;
+
+    ax=Math.floor(Math.random()*tc);
+
+    ay=Math.floor(Math.random()*tc);
+  this.scoreUpdate();
+
+}
+
+ctx.fillStyle="red";
+
+ctx.drawImage(apple,ax*canvasGrid
+,ay*canvasGrid
+,canvasGrid
+-2,canvasGrid
+-2);
+
+}
+function scoreUpdate(){
+this.clicks = this.clicks + 1;
+document.getElementById("score").innerHTML = clicks;
+}
+function gameOver(){
+    document.getElementById("score").innerHTML = 0;
+
+ alert("Your score was: " +  clicks +  " Send the screenshot for the donation on the socials at the bottom ");
+this.clicks = 0     
+posX=posY=10;
+
+canvasGrid
+=tc=20;
+
+ax=ay=15;
+
+xv=yv=0;
+
+trail=[];
+
+tail = 5;
+}
+
+function keyPush(evt) {
+
+switch(evt.keyCode) {
+
+    case 37:
+     evt.preventDefault()
+        xv=-1;yv=0;
+
+        break;
+
+    case 38:
+    evt.preventDefault()
+        xv=0;yv=-1;
+
+        break;
+
+    case 39:
+    evt.preventDefault()
+        xv=1;yv=0;
+
+        break;
+
+    case 40:
+    evt.preventDefault()
+        xv=0;yv=1;
+
+        break;
+
+}
+
+}
+
+
+
+
+
+
+</script>
